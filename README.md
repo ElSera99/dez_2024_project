@@ -126,8 +126,10 @@ Most of the files refer to **images** and **clouds of points** from the radars. 
 
 Required data is stored in a **cloud storage** bucket as:
 
-
 ### Silver
+In this phase, data is transformed from raw format, needed columns are filtered and data is transformed into correct data types.
+
+For this case, the 
 
 ### Gold
 
@@ -155,7 +157,16 @@ This section explains how data was transformed from its original source into the
 
 # Infrastructure
 
-Using **Google Cloud Platform**, 
+Using **Google Cloud Platform**, infrastructure provided for this project is organized as follows:
+![Infrastructure](./img/infrastructure_diagram.jpg)
+
+Main services used:
+- Compute Engine
+- Cloud Storage
+- BigQuery
+- Looker Studio
+
+IaC code and execution instructions can be found in the **Infrastructure** folder
 
 # Orchestration
 
