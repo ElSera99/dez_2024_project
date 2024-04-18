@@ -1,3 +1,9 @@
+wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-472.0.0-linux-x86_64.tar.gz
+gunzip google-cloud-cli-472.0.0-linux-x86_64.tar.gz
+tar -xf google-cloud-cli-472.0.0-linux-x86_64.tar
+
+export GOOGLE_APPLICATION_CREDENTIALS=keys_path
+
 gcloud compute instances create test-instance-dez \
     --project=dez-2024-project \
     --zone=us-west1-b \

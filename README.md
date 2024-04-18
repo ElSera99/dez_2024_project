@@ -127,11 +127,80 @@ Most of the files refer to **images** and **clouds of points** from the radars. 
 Required data is stored in a **cloud storage** bucket as:
 
 ### Silver
-In this phase, data is transformed from raw format, needed columns are filtered and data is transformed into correct data types.
+In this phase, data is transformed from raw format into a standardized format, specific columns and tables from the dataset are filtered and cleaned out, and, columns are transformed into correct data types.
 
-For this case, the 
+For this case, the selected tables and colums of the dataset are:
+- Category:
+    - token: string
+    - category: string
+    - description: string
+    - object: string
+- Visibility:
+    - token: integer
+    - description: string
+    - level_low: integer
+    - level_high: integer
+- Instance:
+    - token: string
+    - category_token: string
+    - nbr_annotations: integer
+    - first_annotation_token: string
+    - last_annotation_token: string
+- Log
+    - token: string
+    - logfile: string
+    - vehicle: string
+    - date_captured: date
+    - location: string
+- Sample
+    - token: string
+    - timestamp: timestamp
+    - prev: string
+    - next: string
+    - scene_token: string
+- Sample_annotation
+    - token: string
+    - sample_token: string
+    - instance_token: string
+    - visibility_token: decimal
+    - attribute_tokens: string
+    - translation: string
+    - size: string
+    - rotation: string
+    - prev: string
+    - next: string
+    - num_lidar_pts: integer
+    - num_radar_pts: integer
+- Sample_data
+    - token: string
+    - sample_token: string
+    - ego_pose_token: string
+    - calibrated_sensor_token: string
+    - timestamp: timestamp
+    - fileformat: string
+    - is_key_frame: boolean
+    - height: integer
+    - width: integer
+    - filename: string
+    - prev: string
+    - next: string
+- Scene
+    - token: string
+    - log_token: string
+    - nbr_samples:string
+    - first_sample_token: string
+    - last_sample_token: string
+    - name: string
+    - description: string
+
+After correction of data types, these are stored in a **bucket** in **Cloud Storage** as parquet files for later usage.
 
 ### Gold
+This is the point where data is completely available to be used by analysts.
+Tables from silver are converted into two major tables called:
+- Objects: Contain data related to categories and instances of objects, indicate which object appeared in a sample and under what circumstances
+- Samples: Contain data related to the sample frame, like location, name and timestamp of capture.
+Tables are stored into a **BigQuery** dataset and ready for usage for analytics or dashboarding.
 
 ## Data Pipeline into Data Warehouse
 
@@ -154,6 +223,9 @@ This section explains how data was transformed from its original source into the
 - Sample Annotation
 - Sample Data
 - *Ego Pose*
+
+Can follow transformation as:
+![data_lineage](./img/data_lineage.jpg)
 
 # Infrastructure
 

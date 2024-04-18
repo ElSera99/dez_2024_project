@@ -4,8 +4,8 @@ ETL_test/bronze/v1.0-trainval_meta/*
 ETL_test/silver/seeds/*
 ETL_test/silver/sources/*
 
-cloud/keys/*.json
-cloud/GCP/terraform.exe
+Infrastructure/keys/*.json
+Infrastructure/terraform.exe
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
