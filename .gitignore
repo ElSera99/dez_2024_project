@@ -1,7 +1,8 @@
 # My files
-initial_proposal/bronze/*
-initial_proposal/silver/*
-initial_proposal/gold/*
+ETL_test/bronze/v1.0-test_meta/*
+ETL_test/bronze/v1.0-trainval_meta/*
+ETL_test/silver/seeds/*
+ETL_test/silver/sources/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
