@@ -101,7 +101,7 @@ Currently stored in AWS S3 bucket, part of **Registry Open Data on AWS**, measur
 
 The data was stored in a relational database with an **OLTP** engine, schema is as follows:
 
-![nuscenes_schema](img\nuscenes_schema.png)
+![nuscenes_schema](./img/nuscenes_schema.png)
 
 # Pipelines
 ## Data Pipeline into Data Lake
@@ -115,7 +115,7 @@ Where the direction of the bucket is https://d36yt3mvayqw5m.cloudfront.net/
 
 This phase consists the extraction of the raw data into the desired location, without any transformation, data is loade as it is.
 
-![meta_nuscenes_source](img\meta_nuscenes_source.png)
+![meta_nuscenes_source](./img/meta_nuscenes_source.png)
 
 Most of the files refer to **images** and **clouds of points** from the radars. For our current scope, we only need the **metadata**
 
