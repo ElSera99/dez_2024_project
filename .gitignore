@@ -1,3 +1,8 @@
+# My files
+initial_proposal/bronze/*
+initial_proposal/silver/*
+initial_proposal/gold/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
