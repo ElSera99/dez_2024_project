@@ -54,8 +54,25 @@ my_dataset_test
 
 After execution, infrastructure will be created and ready to be used.
 
-## Terraform
+As an additional output, this script provides a **.env** file that stores the used values for the creation of the infrastructure, this file can be used in scripts later.
 
+## Terraform
+A Terraform installation must be available, this installation can be easily done by following the steps established in:
+- https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli
+
+The **Terraform scripts** to be executed can be found in the folder *terraform*, in here the script **main.tf** will be in charge of creating the infrastructure, this script provides the definition of the infrastructure that will be allocated.
+
+A file called **variables.tf** is also added, in this file, you can change the names the allocated resources will have, the following variables can be changed:
+- 
+
+For execution, make sure to provide the **JSON Credentials File** at the top of the file in order to grand permissions to Terraform for creating the resources.
+
+Finally, execute the script as follows:
+```bash
+terraform init -upgrade
+terraform apply
+```
+A prompt asking for confirmation will show, type ```yes``` and infrastructure will be up and running
 
 # VM Configuration
 Once the Cloud infrastructure is created, you can continue with the configuration of the virtual machine.
@@ -70,3 +87,4 @@ Now, **provide execution permissions** and run the **setup.sh** script as:
 chmod +x setup.sh
 ./setup.sh <absolute_path_to_JSON_GOOGLE_APPLICATION_CREDENTIALS>
 ```
+Finally, the VM is ready for usage
