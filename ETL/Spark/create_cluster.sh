@@ -9,3 +9,8 @@ echo $MASTER
 
 # Create Spark worker
 $SPARK_HOME/sbin/start-slave.sh $MASTER
+
+# Export master to .env file
+mkdir ~/etl_variables
+touch ~/etl_variables/etl_variables.env
+echo "MASTER=${MASTER}" >> ~/etl_variables/etl_variables.env
