@@ -1,4 +1,8 @@
-# PLEASE REFER TO LATEST COMMIT FOR CORRECT TESTING
+# Recreate project
+In order to recreate project, please use the latest commit and refer to the following files in the suggested order
+1. README.md (This file)
+2. Infrastructure/README.md
+3. ETL/README.md
 
 # Nuscenes Project
 Dataset from
