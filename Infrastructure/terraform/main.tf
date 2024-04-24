@@ -30,7 +30,7 @@ resource "google_storage_bucket" "my_bucket" {
   storage_class = "STANDARD"
   uniform_bucket_level_access = true
   retention_policy {
-    retention_period_days = 8
+    retention_period = 8
   }
 }
 
