@@ -12,10 +12,14 @@ echo ""
 
 # Get Docker
 echo "Install Docker utilities"
-sudo apt-get install docker.io
+sudo apt-get install docker.io -y
 sudo groupadd docker
 sudo gpasswd -a $USER docker
 sudo service docker restart
+DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+mkdir -p $DOCKER_CONFIG/cli-plugins
+curl -SL https://github.com/docker/compose/releases/download/v2.26.1/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
 echo ""
 
 # Install glcoud cli
@@ -38,7 +42,7 @@ wget https://bootstrap.pypa.io/get-pip.py
 python3 get-pip.py
 python3 -m pip install --upgrade pip setuptools
 rm get-pip.py
-sudo apt-get install python3.8-venv
+sudo apt-get install python3.8-venv -y
 echo ""
 
 # Create spark directory

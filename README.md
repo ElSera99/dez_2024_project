@@ -3,6 +3,7 @@ In order to recreate project, please use the latest commit and refer to the foll
 1. README.md (This file)
 2. Infrastructure/README.md
 3. ETL/README.md
+4. Dashboard/README.md
 
 # Nuscenes Project
 Dataset from
@@ -247,5 +248,6 @@ Main services used:
 IaC code and execution instructions can be found in the **Infrastructure** folder
 
 # Orchestration
+
 
 # Dashboard
