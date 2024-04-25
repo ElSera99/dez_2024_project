@@ -36,9 +36,13 @@ def etl_samples(master,dataset_version,google_application_credentials,gcp_connec
 
     # Read files
     df_sample_data = spark.read.parquet(f'gs://{bucket_name}/{dataset_version}/silver/sources/sample_data/*')
+    df_sample_data.printSchema()
     df_sample = spark.read.parquet(f'gs://{bucket_name}/{dataset_version}/silver/sources/sample/*')
+    df_sample.printSchema()
     df_scene = spark.read.parquet(f'gs://{bucket_name}/{dataset_version}/silver/sources/scene/*')
+    df_scene.printSchema()
     df_log = spark.read.parquet(f'gs://{bucket_name}/{dataset_version}/silver/sources/log/*')
+    df_log.printSchema()
     
     # Transform Samples
     df_samples_join_1 = df_sample_data.filter(df_sample_data.is_key_frame == True).join(df_sample, df_sample_data.sample_token == df_sample.token, 'inner').drop('token')
@@ -47,7 +51,7 @@ def etl_samples(master,dataset_version,google_application_credentials,gcp_connec
     samples = df_samples_join_3.select('sample_token','logfile','vehicle', 'location', 'scene_name', 'description', 'timestamp_sample_data','ego_pose_token')
 
     # Write samples
-    samples.repartition(500).write.partitionBy("vehicle").mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/gold/samples/")
+    samples.repartition(2000).write.partitionBy("vehicle").mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/gold/samples/")
 
     spark.stop()
 
@@ -93,7 +97,7 @@ def etl_objects(master,dataset_version,google_application_credentials,gcp_connec
                     .drop('uid', 'visibility_token', 'description', 'attribute_tokens')
     
     # Save data
-    objects.write.partitionBy("object").mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/gold/objects/")
+    objects.repartition(2000).write.partitionBy("object").mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/gold/objects/")
     
     spark.stop()
 

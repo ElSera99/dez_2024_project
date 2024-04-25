@@ -20,9 +20,6 @@ def etl_seeds(master,dataset_version,google_application_credentials,gcp_connecto
     .set("spark.sql.legacy.parquet.int96RebaseModeInWrite", "CORRECTED") \
     .set("spark.sql.legacy.parquet.datetimeRebaseModeInRead", "CORRECTED") \
     .set("spark.sql.legacy.parquet.datetimeRebaseModeInWrite", "CORRECTED") \
-    .set("spark.driver.memory", "5g") \
-    .set("spark.executor.memory", "10g") \
-    .set("spark.executor.cores", "4") \
     .set("spark.jars", gcp_connector_location ) \
     .set("spark.hadoop.google.cloud.auth.service.account.enable", "true") \
     .set("spark.hadoop.google.cloud.auth.service.account.json.keyfile", google_application_credentials)
@@ -200,19 +197,25 @@ def etl_sources(master,dataset_version,google_application_credentials,gcp_connec
 
     # Select data
     df_log = df_log.select('token', 'logfile', 'vehicle','location')
+    df_log.printSchema()
     df_scene = df_scene.select('token','log_token','name','description')
+    df_scene.printSchema()
     df_sample = df_sample.select('token', 'timestamp','scene_token')
+    df_sample.printSchema()
     df_sample_data = df_sample_data.select('sample_token','ego_pose_token','timestamp','is_key_frame','filename')
+    df_sample_data.printSchema()
     df_sample_annotation = df_sample_annotation.select('sample_token','instance_token','visibility_token','attribute_tokens')
+    df_sample_annotation.printSchema()
     df_instance = df_instance.select('token','category_token','nbr_annotations')
+    df_instance.printSchema()
 
     # Store data
     df_log.repartition(2000).write.partitionBy("vehicle").mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/silver/sources/log/")
-    df_scene.repartition(2000).write.partitionBy("name").mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/silver/sources/scene/")
+    df_scene.repartition(2000).write.mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/silver/sources/scene/")
     df_sample.repartition(2000).write.mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/silver/sources/sample/")
     df_sample_data.repartition(2000).write.mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/silver/sources/sample_data/")
     df_sample_annotation.repartition(2000).write.mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/silver/sources/sample_annotation/")
-    df_instance.repartition(2000).write.partitionBy("category_token").mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/silver/sources/instance/")
+    df_instance.repartition(2000).write.mode('overwrite').parquet(f"gs://{bucket_name}/{dataset_version}/silver/sources/instance/")
 
     spark.stop()
 
