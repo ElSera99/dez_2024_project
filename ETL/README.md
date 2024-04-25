@@ -46,9 +46,39 @@ chmod +x stop_airflow.sh
 ./stop_airflow.sh
 ```
 
-# Job Execution
+# DAGS
 Once airflow was correctly configured, a folder called **dags** was created, as follows:
 
 ![dag_folder](./img/dags_folder.png)
 
 Make sure to direcly copy the content of the folder **ETL/dags** into that folder, since it provides the DAG as the orchestration for the ETL pipeline.
+
+Make sure to create a **.env** file that contains the following elements:
+- MASTER: Link to master node of spark
+- GOOGLE_APPLICATION_CREDENTIALS: Absolute path to JSON credentials file
+- PROJECT_ID: Project ID
+- REGION: Region of GCP
+- BUCKET_NAME: Provided name of the bucket
+- INSTANCE_NAME: Name of the VM instance
+- DATASET_NAME: Provided dataset for BigQuery without version
+- BQ_DATASET_NAME: Provided dataset for BigQuery with version
+- DATASET_VERSION: Dataset version
+- GCP_CONNECTOR_LOCATION: Absolute path to JAR file for GCP Cloud Storage Spark connection
+
+Example of **.env** file
+```text
+
+MASTER=spark://this-is-an-instance-test-stb.us-central1-a.c.dez-2024-project.internal:7077
+GOOGLE_APPLICATION_CREDENTIALS=/home/sera/gcp_key.json
+PROJECT_ID=dez-2024-project-stb
+REGION=us-central1
+BUCKET_NAME=this-is-a-test-bucket-stb
+INSTANCE_NAME=this-is-an-instance-test-stb
+DATASET_NAME=my_dataset_test
+BQ_DATASET_NAME=my_dataset_test_v1_0
+DATASET_VERSION=v1.0
+GCP_CONNECTOR_LOCATION=/home/sera/etl_variables/gcs-connector-hadoop3-2.2.5.jar
+
+```
+
+This file is used to execute the three steps of the entire pipeline.

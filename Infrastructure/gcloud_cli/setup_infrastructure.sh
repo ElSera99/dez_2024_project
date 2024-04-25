@@ -69,5 +69,6 @@ echo "REGION=${REGION}" >> $ENV_DIRECTORY/project_variables.env
 echo "BUCKET_NAME=${BUCKET_NAME}" >> $ENV_DIRECTORY/project_variables.env
 echo "INSTANCE_NAME=${INSTANCE_NAME}" >> $ENV_DIRECTORY/project_variables.env
 echo "DATASET_NAME=${DATASET_NAME}" >> $ENV_DIRECTORY/project_variables.env
+echo "DATASET_VERSION=${DATASET_VERSION}" >> $ENV_DIRECTORY/project_variables.env
 echo "BQ_DATASET_NAME=${BQ_DATASET_NAME}" >> $ENV_DIRECTORY/project_variables.env
 echo ""

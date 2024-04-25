@@ -248,6 +248,21 @@ Main services used:
 IaC code and execution instructions can be found in the **Infrastructure** folder
 
 # Orchestration
+For ETL process,a datawarehouse architecture called **medallion architecture** is used.
+This type of architecture makes usage of three stages:
+- Bronze: Raw data
+- Silver: Basic transformations of data
+- Gold: Transformations for refined data, used in analysis
 
+For processing data, three scripts are provided, listed in here:
+- to_bronze.py
+- to_silver.py
+- to_gold.py
+
+In order to efficiently process the data, **PySpark** is used for parallell processing of transformations of the data.
+
+Aditionally, by using **Airflow** the process of execution of the scripts is automated along with the periodicity of execution.
+
+Setup andexecution instructions can be found in the **ETL** folder
 
 # Dashboard

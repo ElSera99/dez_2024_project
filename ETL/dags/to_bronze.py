@@ -1,6 +1,9 @@
 import os
+import glob
 import subprocess
+
 from google.cloud import storage
+from dotenv import load_dotenv
 
 def local_dowload(version, sets):
     try:
@@ -14,21 +17,33 @@ def local_dowload(version, sets):
     except:
         print("Error while locally downloading data")
 
-def upload_folder_to_gcs(local_folder_path, bucket_name, destination_folder):
-    storage_client = storage.Client()
+def upload_to_gcs(credentials_file, bucket_name, dataset_version):
+    # Initialize the Google Cloud Storage client with the credentials
+    storage_client = storage.Client.from_service_account_json(credentials_file)
+    # Get the target bucket
     bucket = storage_client.bucket(bucket_name)
 
-    for root, dirs, files in os.walk(local_folder_path):
-        for file_name in files:
-            local_file_path = os.path.join(root, file_name)
-            relative_path = os.path.relpath(local_file_path, local_folder_path)
-            blob = bucket.blob(f"{destination_folder}/{relative_path}")
-            blob.upload_from_filename(local_file_path)
-            print(f"Uploaded {local_file_path} to {destination_folder}/{relative_path}.")
+    print(credentials_file)
+    print(bucket_name)
+
+    for local_file in glob.glob('bronze/*/*/*'):
+        print(local_file)
+        blob = bucket.blob(f'{dataset_version}/{local_file}')
+        print(f'{dataset_version}/{local_file}')
+        blob.upload_from_filename(local_file)
 
 if __name__ == "__main__":
     version = "v1.0"
     sets = ["test_meta","trainval_meta"]
     for element in sets:
         local_dowload(version, element)
-        upload_folder_to_gcs(f"bronze/{element}", "test-bucket-dez", "bronze")
+
+    load_dotenv('etl_variables.env')
+
+    GOOGLE_APPLICATION_CREDENTIALS = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+    BUCKET_NAME = os.getenv('BUCKET_NAME')
+    DATASET_VERSION = os.getenv('DATASET_VERSION')
+
+    upload_to_gcs(GOOGLE_APPLICATION_CREDENTIALS,BUCKET_NAME,DATASET_VERSION)
+
+    subprocess.run(['rm', '-rf', 'bronze/'])

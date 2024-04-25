@@ -1,4 +1,6 @@
 # My files
+/*.env
+
 ETL_test/bronze/v1.0-test_meta/*
 ETL_test/bronze/v1.0-trainval_meta/*
 ETL_test/silver/seeds/*
